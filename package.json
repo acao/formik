@@ -38,7 +38,10 @@
     "start-website": "cd website && yarn start",
     "build-website": "cd website && yarn install && yarn build",
     "gen-docs": "all-contributors generate && doctoc README.md",
-    "size": "size-limit"
+    "size": "size-limit",
+    "coverage": "yarn test --coverage",
+    "lint": "tslint -t json -o tslint-report.json --project ./tsconfig.json --force",
+    "sonar": "yarn lint && yarn coverage && /Users/$(whoami)/sonarqube/bin/sonar-scanner"
   },
   "dependencies": {
     "create-react-context": "^0.2.2",
@@ -49,6 +52,7 @@
     "prop-types": "^15.6.1",
     "react-fast-compare": "^1.0.0",
     "tslib": "^1.9.3",
+    "tslint-sonarts": "^1.8.0",
     "warning": "^3.0.0"
   },
   "optionalDependencies": {},
@@ -80,6 +84,7 @@
     "husky": "0.14.3",
     "jest": "^23.1.0",
     "jest-cli": "^23.1.0",
+    "jest-sonar-reporter": "^2.0.0",
     "lint-staged": "4.0.2",
     "prettier": "1.11.1",
     "raw-loader": "^0.5.1",
@@ -118,12 +123,14 @@
       "raf/polyfill",
       "<rootDir>/test/setupTest.ts"
     ],
+    "mapCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}"
     ],
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
+    "testResultsProcessor": "jest-sonar-reporter",
     "testMatch": [
       "<rootDir>/test/**/?(*.)(spec|test).ts?(x)"
     ],
