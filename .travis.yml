@@ -1,17 +1,16 @@
 language: node_js
 node_js:
-  - '8'
   - '10'
 env:
   - CI=true
-cache: yarn
+
 git:
   depth: 5
-script:
-  - yarn lint && yarn coverage -- --runInBand --no-cache && yarn size
+    
 addons:
   sonarcloud:
     organization: "acao-github" # the key of the org you chose at step #3
 script:
+  - yarn lint && yarn coverage -- --runInBand --no-cache && yarn size
   # other script steps might be done before running the actual analysis
   - sonar-scanner
